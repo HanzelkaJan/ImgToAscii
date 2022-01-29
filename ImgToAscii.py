@@ -6,6 +6,7 @@ from PIL import Image
 gscale = "@%#*+=-:. "
 
 def main():
+    # --- Parsing ---
     descStr = "Turns images into ASCII art"
     parser = argparse.ArgumentParser(description=descStr)
 
@@ -32,8 +33,8 @@ def main():
     if args.cols:
         cols = int(args.cols)
 
+    # --- Main ---
     ascii = imageToAscii(image, cols, fontScale)
-
     for row in ascii:
         output.write(row + "\n")
 
@@ -49,21 +50,28 @@ def imageToAscii(image, cols, scale):
         print("Image is too small for this many columns")
         exit(0)
 
+
+    # --- Conversion ---
     for j in range(int(rows)):
+        # Height of image "chunks" in order to fit into available rows
         y1 = int(j*h)
         y2 = int((j+1)*h)
+        # Correction for the last chunk
         if j == rows-1:
             y2 = H
-        aimg.append("")
+
+        aimg.append("")  # Create new row
         for i in range(int(cols)):
+            # Width of image "chunks" in order to fit into available columns
             x1 = int(i * w)
             x2 = int((i + 1) * w)
+            # Correction for the last chunk
             if i == cols - 1:
                 x2 = W
 
             img = image.crop((x1, y1, x2, y2))
             avg = getAverageShade(img)
-            aimg[j] += gscale[int(avg/255*9)]
+            aimg[j] += gscale[int(avg/255*9)]  # Appends appropriate symbol based on how dark the chunk is
 
     return aimg
 
