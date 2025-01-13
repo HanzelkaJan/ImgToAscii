@@ -53,7 +53,7 @@ def imageToAscii(image, cols, scale):
 
     # --- Conversion ---
     for j in range(int(rows)):
-        # Height of image "chunks" in order to fit into available rows
+        # Height coordinates of image "chunks" in order to fit into available rows
         y1 = int(j*h)
         y2 = int((j+1)*h)
         # Correction for the last chunk
@@ -62,7 +62,7 @@ def imageToAscii(image, cols, scale):
 
         aimg.append("")  # Create new row
         for i in range(int(cols)):
-            # Width of image "chunks" in order to fit into available columns
+            # Width coordinates of image "chunks" in order to fit into available columns
             x1 = int(i * w)
             x2 = int((i + 1) * w)
             # Correction for the last chunk
